@@ -12,11 +12,12 @@ setup(
     entry_points={
         'console_scripts': ['chickenhat-bot=chickenhat_bot.pubsub:run_chicken_hat'],
     },
-    install_requires=['twitchAPI'],
+    install_requires=['twitchAPI', 'requests'],
     extras_require={
         'development': [
             'black',
             'pylint',
+            'types-requests',
         ]
     },
 )

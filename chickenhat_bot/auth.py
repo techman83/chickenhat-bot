@@ -22,7 +22,9 @@ class Client:
     def twitch(self) -> Twitch:
         if getattr(self, '_twitch', None) is None:
             self._twitch = Twitch(self.client_id, self.client_secret)
-            self._twitch.set_user_authentication(self.SCOPES, **self.load_tokens())
+            self._twitch.set_user_authentication(
+                scope=self.SCOPES, **self.load_tokens()
+            )
         return self._twitch
 
     @property
@@ -43,5 +45,5 @@ class Client:
         return {'token': token, 'refresh_token': refresh_token}
 
     def authenticate(self) -> Tuple[str, str]:
-        auth = UserAuthenticator(self._twitch, self.SCOPES, force_verify=False)
+        auth = UserAuthenticator(self._twitch, self.SCOPES, force_verify=True)
         return auth.authenticate()
