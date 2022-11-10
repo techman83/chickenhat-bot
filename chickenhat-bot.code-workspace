@@ -1,0 +1,38 @@
+
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"python.defaultInterpreterPath": "${workspaceFolder:chickenhat-bot}/venv/bin/python",
+		"python.formatting.provider": "black",
+		"python.formatting.blackArgs": ["--skip-string-normalization"],
+		"editor.formatOnSave": true,
+		"python.linting.pylintEnabled": true,
+		"python.linting.enabled": true,
+		"python.linting.pylintArgs": [
+			"--rcfile",
+			".pylintrc"
+		],
+		"python.linting.mypyEnabled": true,
+		"files.exclude": {
+			"**/__pycache__": true,
+		},
+		"files.watcherExclude": {
+			"**/.pytest_cache": true,
+			"**/.mypy_cache": true,
+			"**/*egg*": true,
+			"**/venv": true
+		},
+		"python.testing.pytestEnabled": false,
+		"python.testing.unittestEnabled": true,
+		"files.trimTrailingWhitespace": true,
+		"files.insertFinalNewline": true,
+		"files.trimFinalNewlines": true,
+	},
+	"extensions": {
+		"ms-python.python"
+	}
+}
