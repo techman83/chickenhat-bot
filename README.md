@@ -1,12 +1,12 @@
+# ChickenHat Bot
 
- import logging
+This is silly hack, on a cheap show prize!
 
- import http.client as http_client
- http_client.HTTPConnection.debuglevel = 1
+Demo here -> https://www.youtube.com/shorts/uD40l2RZySg
 
-# You must initialize logging, otherwise you'll not see debug output.
- logging.basicConfig()
- logging.getLogger().setLevel(logging.DEBUG)
- requests_log = logging.getLogger("requests.packages.urllib3")
- requests_log.setLevel(logging.DEBUG)
- requests_log.propagate = True
+A purely hacked together piece of code to automatically trigger the hat when the chickenhat reward is redeemed on [SsjSilentTV's](https://www.twitch.tv/ssjsilenttv) Twitch stream.
+
+Build Details
+- VL530X Time of Flight Sensor
+- TinyPico MicroController by [Unexpected Maker](https://unexpectedmaker.com/)
+- [Tasmota](https://github.com/arendst/Tasmota) for the IoT integration
