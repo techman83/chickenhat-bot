@@ -2,7 +2,9 @@
 
 This is silly hack, on a cheap show prize!
 
-Demo here -> https://www.youtube.com/shorts/uD40l2RZySg
+Hat Demo here -> https://www.youtube.com/shorts/uD40l2RZySg
+
+Twitch Redeem Demo -> https://youtube.com/shorts/_8AXoxJZ9SM
 
 A purely hacked together piece of code to automatically trigger the hat when the chickenhat reward is redeemed on [SsjSilentTV's](https://www.twitch.tv/ssjsilenttv) Twitch stream.
 
