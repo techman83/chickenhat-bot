@@ -29,7 +29,7 @@ def launch_chickenhat():
         logging.error('Item update failed: %s (%s)', result.reason, result.status_code)
         logging.debug(result.text)
     else:
-        logging.info('ChickenHat ON!')
+        logging.debug('ChickenHat ON!')
 
 
 def callback_channel(uuid: UUID, data: dict) -> None:
