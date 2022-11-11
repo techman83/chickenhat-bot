@@ -1,8 +1,10 @@
 import os
 import logging
 import requests
+import asyncio
 from requests.exceptions import RequestException
 from uuid import UUID
+
 
 from twitchAPI.pubsub import PubSub
 
@@ -55,7 +57,9 @@ def run_chicken_hat():
     pubsub.start()
     listener = pubsub.listen_channel_points('80751890', callback_channel)
 
-    input('press ENTER to close...')
+    logging.info('Chicken Hat Started!')
+    loop = asyncio.get_event_loop()
+    loop.run_forever()
 
     pubsub.unlisten(listener)
     pubsub.stop()

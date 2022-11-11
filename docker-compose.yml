@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  chickenhat-bot:
+    build:
+      context: .
+      target: production
+    environment:
+      OPENHAB_URL: ${OPENHAB_URL}
+      TWITCH_USER_ID: ${TWITCH_USER_ID}
+      TWITCH_CLIENT_ID: ${TWITCH_CLIENT_ID}
+      TWITCH_CLIENT_SECRET: ${TWITCH_CLIENT_SECRET}
+    volumes:
+      - ${HOME}/.chickenhat:/home/chicken/.chickenhat
+    restart: always

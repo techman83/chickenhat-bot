@@ -34,7 +34,7 @@ class Client:
         return self._tokens
 
     def load_tokens(self) -> dict:
-        token_cache = Path(Path.home(), '.chicken-hat')
+        token_cache = Path(Path.home(), '.chickenhat')
         if not token_cache.exists():
             token, refresh_token = self.authenticate()
             token_cache.write_text(refresh_token)
