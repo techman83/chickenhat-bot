@@ -46,6 +46,8 @@ def callback_channel(uuid: UUID, data: dict) -> None:
     if title.lower().replace(' ', '') == 'thechickenhat':
         logging.info('Chicken Hat Redeemed by %s!', user)
         launch_chickenhat()
+    else:
+        logging.info('%s Redeemed by %s!', title, user)
 
 
 def run_chicken_hat():
@@ -55,11 +57,16 @@ def run_chicken_hat():
     )
     pubsub = PubSub(twitch.twitch)
     pubsub.start()
-    listener = pubsub.listen_channel_points('80751890', callback_channel)
+    listener = pubsub.listen_channel_points(
+        os.environ.get('TWITCH_USER_ID', ''), callback_channel
+    )
 
     logging.info('Chicken Hat Started!')
     loop = asyncio.get_event_loop()
-    loop.run_forever()
+    try:
+        loop.run_forever()
+    finally:
+        loop.close()
 
     pubsub.unlisten(listener)
     pubsub.stop()
