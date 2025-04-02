@@ -1,4 +1,4 @@
-FROM python:3.11 as base
+FROM python:3.12 AS base
 RUN useradd -ms /bin/bash chicken
 ADD . /chicken-hat
 WORKDIR /chicken-hat
@@ -7,7 +7,7 @@ RUN chown -R chicken:chicken /chicken-hat
 USER chicken
 RUN pip install --user . --no-warn-script-location
 
-FROM python:3.11 as production
+FROM python:3.12 AS production
 COPY --from=base /home/chicken /home/chicken
 RUN useradd -Ms /bin/bash chicken
 RUN chown -R chicken:chicken /home/chicken

@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chickenhat-bot"
+description = "Chicken Hat Twitch Bot"
+version = "0.0.1"
+authors = [
+    {name = "Leon Wright", email = "techman83@gmail.com"},
+]
+requires-python = ">=3.7"
+dependencies = [
+    "twitchAPI",
+    "requests",
+]
+
+[project.optional-dependencies]
+development = [
+    "black",
+    "ruff",
+    "types-requests",
+]
+
+[project.scripts]
+chickenhat-bot = "chickenhat_bot.pubsub:run_chicken_hat"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
