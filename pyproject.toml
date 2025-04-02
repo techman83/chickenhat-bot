@@ -11,7 +11,7 @@ authors = [
 ]
 requires-python = ">=3.7"
 dependencies = [
-    "twitchAPI",
+    "twitchAPI>=3.0.0",
     "requests",
 ]
 
@@ -23,7 +23,7 @@ development = [
 ]
 
 [project.scripts]
-chickenhat-bot = "chickenhat_bot.pubsub:run_chicken_hat"
+chickenhat-bot = "chickenhat_bot.eventsub:run_chicken_hat"
 
 [tool.setuptools.packages.find]
 where = ["src"]

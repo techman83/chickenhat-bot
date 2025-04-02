@@ -1,15 +1,15 @@
+import asyncio
 from pathlib import Path
-from typing import Tuple
+from typing import Any, Dict, Optional, Tuple
 
+from twitchAPI.oauth import UserAuthenticator, refresh_access_token
 from twitchAPI.twitch import Twitch
-from twitchAPI.oauth import UserAuthenticator
-from twitchAPI.types import AuthScope
-from twitchAPI.oauth import refresh_access_token
+from twitchAPI.type import AuthScope
 
 
 class Client:
-    _twitch: Twitch
-    _tokens: dict
+    _twitch: Optional[Twitch] = None
+    _tokens: Optional[Dict[str, str]] = None
     client_id: str
     client_secret: str
     SCOPES = [AuthScope.CHANNEL_READ_REDEMPTIONS]
@@ -18,32 +18,39 @@ class Client:
         self.client_id = client_id
         self.client_secret = client_secret
 
-    @property
-    def twitch(self) -> Twitch:
-        if getattr(self, '_twitch', None) is None:
-            self._twitch = Twitch(self.client_id, self.client_secret)
-            self._twitch.set_user_authentication(
-                scope=self.SCOPES, **self.load_tokens()
+    async def get_twitch(self) -> Twitch:
+        """Get an authenticated Twitch API instance"""
+        if self._twitch is None:
+            self._twitch = await Twitch(self.client_id, self.client_secret)
+            tokens = await self.load_tokens()
+            await self._twitch.set_user_authentication(
+                tokens['token'], self.SCOPES, tokens['refresh_token']
             )
         return self._twitch
 
-    @property
-    def tokens(self) -> dict:
-        if getattr(self, '_tokens', None) is None:
-            self._tokens = self.load_tokens()
-        return self._tokens
+    async def load_tokens(self) -> Dict[str, str]:
+        """Load or refresh authentication tokens"""
+        if self._tokens is not None:
+            return self._tokens
 
-    def load_tokens(self) -> dict:
         token_cache = Path(Path.home(), '.chickenhat')
         if not token_cache.exists():
-            token, refresh_token = self.authenticate()
+            token, refresh_token = await self.authenticate()
             token_cache.write_text(refresh_token)
         else:
-            token, refresh_token = refresh_access_token(
-                token_cache.read_text(), self.client_id, self.client_secret
+            refresh_token = token_cache.read_text()
+            token_data = await refresh_access_token(
+                refresh_token, self.client_id, self.client_secret
             )
-        return {'token': token, 'refresh_token': refresh_token}
+            token = token_data[0]
+            refresh_token = token_data[1]
 
-    def authenticate(self) -> Tuple[str, str]:
-        auth = UserAuthenticator(self._twitch, self.SCOPES, force_verify=True)
-        return auth.authenticate()
+        self._tokens = {'token': token, 'refresh_token': refresh_token}
+        return self._tokens
+
+    async def authenticate(self) -> Tuple[str, str]:
+        """Authenticate with Twitch and get tokens"""
+        twitch = await Twitch(self.client_id, self.client_secret)
+        auth = UserAuthenticator(twitch, self.SCOPES, force_verify=True)
+        token, refresh_token = await auth.authenticate()
+        return token, refresh_token
